@@ -1,0 +1,40 @@
+﻿<Window x:Class="MapTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mapControl="clr-namespace:MapControl;assembly=MapControl.WPF"
+        xmlns:mapTest="clr-namespace:MapTest"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance mapTest:ViewModel}"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <mapTest:ViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+
+        <Style x:Key="PointItemStyle" TargetType="mapControl:MapItem">
+            <Setter Property="mapControl:MapPanel.Location" Value="{Binding Location}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="mapControl:MapItem">
+                        <mapTest:MapPoint DataContext="{Binding}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <mapControl:TileLayer x:Key="OpenStreetMap" SourceName="OpenStreetMap"
+                              Description="Maps © [OpenStreetMap Contributors](http://www.openstreetmap.org/copyright)"
+                              TileSource="http://{c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                              MaxZoomLevel="19" />
+    </Window.Resources>
+    <mapControl:Map TileLayer="{StaticResource OpenStreetMap}" ZoomLevel="{Binding Path=Zoom}">
+
+        <mapControl:MapGraticule Opacity="0.6"/>
+        <mapControl:MapItemsControl ItemsSource="{Binding Points}"
+                                    ItemContainerStyle="{StaticResource PointItemStyle}"
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectionMode="Extended" />
+    </mapControl:Map>
+</Window>
