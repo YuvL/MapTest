@@ -30,10 +30,10 @@ namespace MapTest
 
         private void UpdateCluster(ObservableCollection<Point> points)
         {
-            xAxisRes = (int) (Math.Pow(10, Zoom*0.3));
-            yAxisRes = (int)(Math.Pow(10, Zoom * 0.3));
-            lonStep = 360.0/xAxisRes;
-            latStep = 180.0/yAxisRes;
+            _xAxisRes = (int) (Math.Pow(10, Zoom*0.3));
+            _yAxisRes = (int)(Math.Pow(10, Zoom * 0.3));
+            _lonStep = 360.0/_xAxisRes;
+            _latStep = 180.0/_yAxisRes;
 
             ILookup<object, Point> lookup = points.ToLookup(DefineCell);
             Points.Clear();
@@ -56,13 +56,13 @@ namespace MapTest
             double lonNormalized = point.Location.Longitude + 180;
             double latNormalized = point.Location.Latitude + 90;
 
-            var lonCeiling = (int) Math.Ceiling(lonNormalized/lonStep);
-            var latCeiling = (int) Math.Ceiling(latNormalized/latStep);
+            var lonCeiling = (int) Math.Ceiling(lonNormalized/_lonStep);
+            var latCeiling = (int) Math.Ceiling(latNormalized/_latStep);
 
             int lonCell = lonCeiling == 0 ? 1 : lonCeiling;
             int latCell = latCeiling == 0 ? 1 : latCeiling;
 
-            var cell = (latCell - 1)*xAxisRes + lonCell;
+            var cell = (latCell - 1)*_xAxisRes + lonCell;
             return cell;
         }
 
@@ -83,20 +83,20 @@ namespace MapTest
 
             for (int i = 0; i < 100; i++)
             {
-                int latitude = random.Next(-10, 10);
-                int longitude = random.Next(-18, 18);
+                int latitude = _random.Next(-10, 10);
+                int longitude = _random.Next(-18, 18);
                 points.Add(new Point {Location = new Location(latitude, longitude)});
             }
 
             return points;
         }
 
-        private int xAxisRes;
-        private int yAxisRes;
-        private double lonStep;
-        private double latStep;
+        private int _xAxisRes;
+        private int _yAxisRes;
+        private double _lonStep;
+        private double _latStep;
         private readonly ObservableCollection<Point> _points;
-        private readonly Random random = new Random();
+        private readonly Random _random = new Random();
         private double _zoom;
     }
 
