@@ -1,3 +1,4 @@
 MapTest/obj/
 packages/
 MapTest/bin/
+*.suo

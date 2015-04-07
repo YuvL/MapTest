@@ -38,7 +38,17 @@ namespace MapTest
             ILookup<object, Point> lookup = points.ToLookup(DefineCell);
             Points.Clear();
             foreach (var item in lookup)
-                Points.Add(new Cluster(item.ToList()));
+            {
+                List<Point> list = item.ToList();
+                if (list.Count ==1)
+                {
+                    Points.Add(list.First());
+                }
+                else
+                {
+                    Points.Add(new Cluster(list));
+                }
+            }
         }
 
         private object DefineCell(Point point)
@@ -71,7 +81,7 @@ namespace MapTest
                 new Point {Location = new Location(-85, -180)}
             };
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 int latitude = random.Next(-10, 10);
                 int longitude = random.Next(-18, 18);

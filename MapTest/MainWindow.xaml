@@ -31,7 +31,7 @@
     </Window.Resources>
     <mapControl:Map TileLayer="{StaticResource OpenStreetMap}" ZoomLevel="{Binding Path=Zoom}">
 
-        <mapControl:MapGraticule Opacity="0.6"/>
+   
         <mapControl:MapItemsControl ItemsSource="{Binding Points}"
                                     ItemContainerStyle="{StaticResource PointItemStyle}"
                                     IsSynchronizedWithCurrentItem="True"
