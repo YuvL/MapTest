@@ -25,6 +25,7 @@ namespace MapTest
         {
             Points = new ObservableCollection<PointBase>();
             _points = LoadPoints();
+
             UpdateCluster(_points);
         }
 
