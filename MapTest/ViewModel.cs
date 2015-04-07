@@ -23,9 +23,12 @@ namespace MapTest
 
         public ViewModel()
         {
+
+
+
             Points = new ObservableCollection<PointBase>();
             _points = LoadPoints();
-
+              
             UpdateCluster(_points);
         }
 
