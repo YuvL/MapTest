@@ -1,36 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MapTest.Cluster">
-    <Position X="16" Y="1.25" Width="1.5" />
+    <Position X="3.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAgAAgAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cluster.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MapTest.Point" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Point.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MapTest.ViewModel">
-    <Position X="3" Y="1.5" Width="2" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAQAAACAAAAAgAAAkAAAAAAAAAAAAAAAAAAACAgAAAE=</HashCode>
-      <FileName>ViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MapTest.PointBase">
-    <Position X="13.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAACAAAIAAAQCAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="MapTest.Point" Collapsed="true">
+    <Position X="1.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Point.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="MapTest.IMapPointBase">
+    <Position X="6.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clusteriser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapTest.ICluster">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <InheritanceLine Type="MapTest.IMapPointBase" FixedFromPoint="true">
+      <Path>
+        <Point X="8.25" Y="1.5" />
+        <Point X="8.75" Y="1.5" />
+        <Point X="8.75" Y="2.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clusteriser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapTest.IMapPoint">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <InheritanceLine Type="MapTest.IMapPointBase" FixedFromPoint="true">
+      <Path>
+        <Point X="6.75" Y="1.687" />
+        <Point X="6.25" Y="1.687" />
+        <Point X="6.25" Y="2.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clusteriser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

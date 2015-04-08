@@ -9,7 +9,7 @@
         <DataTemplate DataType="{x:Type mapTest:Cluster}">
             <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="16" FontStyle="Italic" ToolTip="{Binding Path=Points.Count}" />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type mapTest:PointBase}">
+        <DataTemplate DataType="{x:Type mapTest:Point}">
             <TextBlock Text="{Binding Path=Name}" />
         </DataTemplate>
     </UserControl.Resources>

@@ -7,7 +7,7 @@ namespace MapTest
 {
     public class ViewModel
     {
-        public ObservableCollection<PointBase> Points { get; set; }
+        public ObservableCollection<IMapPointBase> Points { get; set; }
 
         public double Zoom
         {
@@ -21,25 +21,20 @@ namespace MapTest
 
         public ViewModel()
         {
-            Points = new ObservableCollection<PointBase>();
+            Points = new ObservableCollection<IMapPointBase>();
 
             _clusterableItems = LoadPoints();
 
             Update();
         }
 
-        private static double GetMinAllowableDistance(double zoom)
-        {
-            //функция подобрана эмпирически
-            double scale = Math.Pow(2.0, zoom)/3.5;
-            return markerSize/scale;
-        }
+    
 
         private void Update(double zoom = 1)
         {
             Points.Clear();
 
-            var points = Clusteriser.Clusterise(_clusterableItems, ClusteriseFunc);
+            var points = Clusteriser.Clusterise<Cluster>(_clusterableItems, zoom);
 
             foreach (var point in points)
             {
@@ -47,14 +42,10 @@ namespace MapTest
             }
         }
 
-        private bool ClusteriseFunc(PointBase clusterable, PointBase clusterable1)
-        {
-            return clusterable.DistanceTo(clusterable1) < GetMinAllowableDistance(Zoom);
-        }
 
-        private IEnumerable<PointBase> LoadPoints()
+        private IEnumerable<IMapPointBase> LoadPoints()
         {
-            var points = new List<PointBase>();
+            var points = new List<IMapPointBase>();
 
             for (int i = 0; i < 1000; i++)
             {
@@ -66,10 +57,9 @@ namespace MapTest
             return points;
         }
 
-        private const int markerSize = 20;
 
         private readonly Random _random = new Random();
         private double _zoom;
-        private readonly IEnumerable<PointBase> _clusterableItems;
+        private readonly IEnumerable<IMapPointBase> _clusterableItems;
     }
 }

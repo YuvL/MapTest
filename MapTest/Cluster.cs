@@ -1,21 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MapControl;
 
 namespace MapTest
 {
-    public class Cluster : PointBase, ICluster
+    public class Cluster : ICluster
     {
-        public IEnumerable<IClusterable> Points { get; private set; }
+        public IEnumerable<IMapPointBase> Points { get; private set; }
+        public string Name { get { return string.Format("({0},{1})", Math.Round(Location.Latitude), Math.Round(Location.Longitude)); } }
 
-        public Cluster(List<IClusterable> points)
+        public void SetPoints(IEnumerable<IMapPointBase> points)
         {
-            double centroidLat = points.Select(x => x.Location.Latitude).Sum()/points.Count;
-            double centroidlon = points.Select(x => x.Location.Longitude).Sum()/points.Count;
+            var distanceClusterables = points as IMapPointBase[] ?? points.ToArray();
+            double centroidLat = distanceClusterables.Select(x => x.Location.Latitude).Sum() / distanceClusterables.Length;
+            double centroidlon = distanceClusterables.Select(x => x.Location.Longitude).Sum() / distanceClusterables.Length;
 
-            Points = new List<IClusterable>(points);
+            Points = new List<IMapPointBase>(distanceClusterables);
             Location = new Location(centroidLat, centroidlon);
+        }
+
+        public Location Location
+        {
+            get;
+            set;
         }
     }
 }

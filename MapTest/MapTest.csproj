@@ -65,15 +65,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base.cs" />
     <Compile Include="Cluster.cs" />
-    <Compile Include="Class2.cs" />
     <Compile Include="Clusteriser.cs" />
     <Compile Include="MapPoint.xaml.cs">
       <DependentUpon>MapPoint.xaml</DependentUpon>
     </Compile>
     <Compile Include="Point.cs" />
-    <Compile Include="PointBase.cs" />
+    <Compile Include="PointBindableBase.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

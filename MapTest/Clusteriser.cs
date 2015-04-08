@@ -4,36 +4,57 @@ using System.Linq;
 
 namespace MapTest
 {
-    /*
-        public interface IClusterable
-        {
-          //  MapControl.Location Location { get; }
-            double DistanceTo(IClusterable point);
-        }
-    */
+    public interface IMapPointBase
+    {
+        MapControl.Location Location { get; set; }
+    }
+
+    public interface ICluster : IMapPointBase
+    {
+        void SetPoints(IEnumerable<IMapPointBase> nearestItems);
+    }
+
+    public interface IMapPoint : IMapPointBase
+    {
+        double DistanceTo(IMapPointBase point);
+    }
 
     public class Clusteriser
     {
-        public static IEnumerable<TPoint> Clusterise<TPoint,TCluster>(IEnumerable<TPoint> points, Func<TPoint, TPoint, bool> clusteriseFunc) where TCluster:class 
+        private const int MarkerSize = 20;
+
+        private static double GetMinAllowableDistance(double zoom)
         {
-            var clusterables = points.Select(x => new ClusterableItem<TPoint>(x)).ToList();
+            //функция подобрана эмпирически
+            double scale = Math.Pow(2.0, zoom) / 3.5;
+            return MarkerSize / scale;
+        }
+
+        public static IEnumerable<IMapPointBase> Clusterise<TCluster>(IEnumerable<IMapPointBase> points, double zoom)
+            where TCluster : ICluster, new()
+        {
+            var minAllowableDistance = GetMinAllowableDistance(zoom);
+            var internalPoints = points.Select(x => new InternalContainer(x)).ToList();
 
             while (true)
             {
-                ClusterableItem<TPoint> clusterableItem = clusterables.FirstOrDefault(x => !x.IsProcessed && !x.IsCluster);
-                if (clusterableItem != null)
+                var point = internalPoints.FirstOrDefault(x => !x.IsProcessed && !x.IsCluster);
+                if (point != null)
                 {
-                    var nearestItems = clusterables.Where(p => !clusterableItem.IsProcessed && clusteriseFunc(clusterableItem.Item, p.Item)).ToList();
-                    if (nearestItems.Count > 1)
+                    List<InternalContainer> nearestPoints = internalPoints.Where(p => !p.IsProcessed && !p.IsCluster && ((IMapPoint)p.Item).DistanceTo(point.Item) < minAllowableDistance).ToList();
+                    if (nearestPoints.Count > 1)
                     {
-                        foreach (var nearbyPoint in nearestItems)
-                            clusterables.Remove(nearbyPoint);
+                        foreach (InternalContainer nearesItem in nearestPoints)
+                            internalPoints.Remove(nearesItem);
 
-                        clusterables.Add(new Cluster(nearestItems));
+                        var cluster = (ICluster)new TCluster();
+                        cluster.SetPoints(nearestPoints.Select(x => x.Item));
+
+                        internalPoints.Add(new InternalContainer(cluster));
                     }
                     else
                     {
-                        foreach (var nearbyPoint in nearestItems)
+                        foreach (var nearbyPoint in nearestPoints)
                             nearbyPoint.IsProcessed = true;
                     }
                 }
@@ -42,25 +63,22 @@ namespace MapTest
                     break;
                 }
             }
-            return clusterables.Cast<TPoint>();
+            return internalPoints.Select(x => x.Item);
         }
-    }
 
-    public class ClusterableItem<T>
-    {
-        public bool IsProcessed { get; set; }
-        public bool IsCluster { get { return _clusterable is ICluster; } }
-        public T Item { get { return _clusterable; } }
-
-        public ClusterableItem(T clusterable)
+        private class InternalContainer
         {
-            _clusterable = clusterable;
+            public bool IsProcessed { get; set; }
+            public bool IsCluster { get { return _clusterable is ICluster; } }
+            public IMapPointBase Item { get { return _clusterable; } }
+
+            public InternalContainer(IMapPointBase item)
+            {
+                _clusterable = item;
+            }
+
+            private readonly IMapPointBase _clusterable;
         }
-
-        private readonly T _clusterable;
     }
 
-    public interface ICluster
-    {
-    }
 }
