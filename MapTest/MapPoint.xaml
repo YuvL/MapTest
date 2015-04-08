@@ -7,9 +7,9 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type mapTest:Cluster}">
-            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontStyle="Italic" ToolTip="{Binding Path=Points.Count}" />
+            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="16" FontStyle="Italic" ToolTip="{Binding Path=Points.Count}" />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type mapTest:Point}">
+        <DataTemplate DataType="{x:Type mapTest:PointBase}">
             <TextBlock Text="{Binding Path=Name}" />
         </DataTemplate>
     </UserControl.Resources>
