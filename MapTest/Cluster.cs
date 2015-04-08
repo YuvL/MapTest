@@ -24,7 +24,7 @@ namespace MapTest
         public Location Location
         {
             get;
-            set;
+           private set;
         }
     }
 }

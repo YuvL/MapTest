@@ -51,7 +51,7 @@ namespace MapTest
             {
                 double latitude = _random.Next(-90, 90) + _random.NextDouble();
                 double longitude = _random.Next(-180, 180) + _random.NextDouble();
-                points.Add(new Point {Location = new Location(latitude, longitude)});
+                points.Add(new Point(new Location(latitude, longitude)));
             }
 
             return points;

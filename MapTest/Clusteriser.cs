@@ -6,7 +6,7 @@ namespace MapTest
 {
     public interface IMapPointBase
     {
-        MapControl.Location Location { get; set; }
+        MapControl.Location Location { get;  }
     }
 
     public interface ICluster : IMapPointBase
@@ -69,7 +69,7 @@ namespace MapTest
         private class InternalContainer
         {
             public bool IsProcessed { get; set; }
-            public bool IsCluster { get { return _clusterable is ICluster; } }
+            public bool IsCluster { get { return Item is ICluster; } }
             public IMapPointBase Item { get { return _clusterable; } }
 
             public InternalContainer(IMapPointBase item)
@@ -80,5 +80,4 @@ namespace MapTest
             private readonly IMapPointBase _clusterable;
         }
     }
-
 }

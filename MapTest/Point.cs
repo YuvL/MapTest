@@ -5,9 +5,14 @@ namespace MapTest
 {
     public class Point :  IMapPoint
     {
+        public Point(Location location)
+        {
+            Location = location;
+        }
+
         public string Name { get { return string.Format("({0},{1})", Math.Round(Location.Latitude), Math.Round(Location.Longitude)); } }
 
-        public Location Location { get; set; }
+        public Location Location { get; private set; }
 
         public double DistanceTo(IMapPointBase point)
         {
