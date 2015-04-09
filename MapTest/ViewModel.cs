@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using MapControl;
 
 namespace MapTest
@@ -24,9 +25,18 @@ namespace MapTest
         {
             Points = new ObservableCollection<IPoint>();
 
-            _clusterableItems = LoadPoints();
-            _clusterizer = new Clusterizer();
+            _clusterizer = new Clusterizer<Point, Cluster>(RebuildCallback);
+            _clusterizer.AddItems(LoadPoints<Point>());
             Update();
+        }
+
+        private void RebuildCallback(IEnumerable<IPoint> points)
+        {
+            Points.Clear();
+            foreach (var point in points)
+            {
+                Points.Add(point);
+            }
         }
 
         private void Update(double zoom = 1)
@@ -35,37 +45,29 @@ namespace MapTest
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            var points = _clusterizer.Clusterise<Cluster>(_clusterableItems, zoom);
- 
-
-            foreach (var point in points)
-            {
-                Points.Add(point);
-            }
+            _clusterizer.Rebuild(zoom);
 
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds + " мс");
             Console.WriteLine(Points.Count + " т. на карте\r\n");
         }
 
-        private IEnumerable<IPoint> LoadPoints()
+        private IEnumerable<TPoint> LoadPoints<TPoint>() where TPoint : IPoint
         {
             var points = new List<IPoint>();
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 50; i++)
             {
-                double latitude = _random.Next(-90, 90) + _random.NextDouble();
-                double longitude = _random.Next(-180, 180) + _random.NextDouble();
+                double latitude = _random.Next(-89, 89) + _random.NextDouble();
+                double longitude = _random.Next(-179, 179) + _random.NextDouble();
                 points.Add(new Point(new Location(latitude, longitude)));
             }
 
-            return points;
+            return points.Cast<TPoint>();
         }
-
 
         private readonly Random _random = new Random();
         private double _zoom;
-        private readonly IEnumerable<IPoint> _clusterableItems;
-        private Clusterizer _clusterizer;
+        private readonly Clusterizer<Point, Cluster> _clusterizer;
     }
 }
