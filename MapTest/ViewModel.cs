@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using MapControl;
 
 namespace MapTest
 {
     public class ViewModel
     {
-        public ObservableCollection<IMapPointBase> Points { get; set; }
+        public ObservableCollection<IPoint> Points { get; set; }
 
         public double Zoom
         {
@@ -21,33 +22,37 @@ namespace MapTest
 
         public ViewModel()
         {
-            Points = new ObservableCollection<IMapPointBase>();
+            Points = new ObservableCollection<IPoint>();
 
             _clusterableItems = LoadPoints();
-
+            _clusterizer = new Clusterizer();
             Update();
         }
-
-    
 
         private void Update(double zoom = 1)
         {
             Points.Clear();
 
-            var points = Clusteriser.Clusterise<Cluster>(_clusterableItems, zoom);
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            var points = _clusterizer.Clusterise<Cluster>(_clusterableItems, zoom);
+ 
 
             foreach (var point in points)
             {
                 Points.Add(point);
             }
+
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds + " мс");
+            Console.WriteLine(Points.Count + " т. на карте\r\n");
         }
 
-
-        private IEnumerable<IMapPointBase> LoadPoints()
+        private IEnumerable<IPoint> LoadPoints()
         {
-            var points = new List<IMapPointBase>();
+            var points = new List<IPoint>();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 200; i++)
             {
                 double latitude = _random.Next(-90, 90) + _random.NextDouble();
                 double longitude = _random.Next(-180, 180) + _random.NextDouble();
@@ -60,6 +65,7 @@ namespace MapTest
 
         private readonly Random _random = new Random();
         private double _zoom;
-        private readonly IEnumerable<IMapPointBase> _clusterableItems;
+        private readonly IEnumerable<IPoint> _clusterableItems;
+        private Clusterizer _clusterizer;
     }
 }

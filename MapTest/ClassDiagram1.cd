@@ -8,47 +8,26 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MapTest.Point" Collapsed="true">
+  <Class Name="MapTest.Point">
     <Position X="1.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Point.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="MapTest.IMapPointBase">
-    <Position X="6.75" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Clusteriser.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="MapTest.ICluster">
-    <Position X="7.75" Y="2.75" Width="1.5" />
-    <InheritanceLine Type="MapTest.IMapPointBase" FixedFromPoint="true">
-      <Path>
-        <Point X="8.25" Y="1.5" />
-        <Point X="8.75" Y="1.5" />
-        <Point X="8.75" Y="2.75" />
-      </Path>
-    </InheritanceLine>
+    <Position X="6" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Clusteriser.cs</FileName>
+      <FileName>Clusterizer.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MapTest.IMapPoint">
-    <Position X="5.75" Y="2.75" Width="1.5" />
-    <InheritanceLine Type="MapTest.IMapPointBase" FixedFromPoint="true">
-      <Path>
-        <Point X="6.75" Y="1.687" />
-        <Point X="6.25" Y="1.687" />
-        <Point X="6.25" Y="2.75" />
-      </Path>
-    </InheritanceLine>
+  <Interface Name="MapTest.IPoint">
+    <Position X="6" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Clusteriser.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clusterizer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

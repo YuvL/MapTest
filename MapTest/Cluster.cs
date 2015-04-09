@@ -8,16 +8,16 @@ namespace MapTest
 {
     public class Cluster : ICluster
     {
-        public IEnumerable<IMapPointBase> Points { get; private set; }
+        public IEnumerable<IPoint> Points { get; private set; }
         public string Name { get { return string.Format("({0},{1})", Math.Round(Location.Latitude), Math.Round(Location.Longitude)); } }
 
-        public void SetPoints(IEnumerable<IMapPointBase> points)
+        public void SetPoints(IEnumerable<IPoint> points)
         {
-            var distanceClusterables = points as IMapPointBase[] ?? points.ToArray();
+            var distanceClusterables = points as IPoint[] ?? points.ToArray();
             double centroidLat = distanceClusterables.Select(x => x.Location.Latitude).Sum() / distanceClusterables.Length;
             double centroidlon = distanceClusterables.Select(x => x.Location.Longitude).Sum() / distanceClusterables.Length;
 
-            Points = new List<IMapPointBase>(distanceClusterables);
+            Points = new List<IPoint>(distanceClusterables);
             Location = new Location(centroidLat, centroidlon);
         }
 
